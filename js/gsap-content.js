@@ -8,9 +8,9 @@ let imgList = [];
 for (let i = 1; i < 11; i++) {
   imgList[i - 1] = new Image();
   if (i >= 10) {
-    imgList[i - 1].src = "./img/scene/" + i + ".png";
+    imgList[i - 1].src = "../img/scene/" + i + ".png";
   } else {
-    imgList[i - 1].src = "./img/scene/0" + i + ".png";
+    imgList[i - 1].src = "../img/scene/0" + i + ".png";
   }
 }
 
