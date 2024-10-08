@@ -169,9 +169,9 @@ document.addEventListener('DOMContentLoaded', function () {
   let galWidth = (document.querySelector(".gallery .subsection").offsetWidth - innerWidth);
 
   // enter
-  gsap.from(document.querySelector(".gallery .container"), {
+  gsap.from(".gallery .container", {
     scrollTrigger: {
-      trigger: document.querySelector(".gallery"),
+      trigger: ".gallery",
       start: "top 60%",
       end: "+=100%",
       scrub: 1
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   gsap.timeline({
     scrollTrigger: {
-      trigger: document.querySelector(".gallery"),
+      trigger: ".gallery",
       pin: true,
       pinSpacing: "margin",
       start: "top top",
@@ -201,6 +201,30 @@ document.addEventListener('DOMContentLoaded', function () {
       stagger: .04,
       yPercent: -4
     }, "<");
+
+
+  // Gallery Marquee
+  let textWidthOffset = document.querySelectorAll(".gallery-marquee .text")[0].offsetWidth + document.querySelectorAll(".gallery-marquee .text")[1].offsetWidth + document.querySelectorAll(".gallery-marquee .text")[2].offsetWidth;
+
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: ".gallery",
+      start: 'top top',
+      end: ()=> galWidth*1.5,
+      toggleActions: 'play pause resume resume'
+    }
+  }).fromTo(".gallery-marquee .text", {
+    x: -textWidthOffset
+  },
+    {
+      duration: 60,
+      ease: "none",
+      x: "+=" + textWidthOffset,
+      /*modifiers: {
+          x: gsap.utils.unitize(x => parseFloat(x) % textWidthOffset) // reset x, reposition element seamlessly
+      },*/
+      repeat: -1
+    });
 
   //-----------------------------------------------
   // SOUNDTRACKS
@@ -492,7 +516,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     clueH.forEach((clue) => {
       clue.addEventListener("mouseover", function () {
-        document.querySelector(".backdrop img").src = "./img/scene/" + clue.getAttribute("scene") + ".png";
+        document.querySelector(".backdrop img").src = "../img/scene/" + clue.getAttribute("scene") + ".png";
         document.querySelector(".backdrop").classList.add("show");
       });
     });
@@ -549,7 +573,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
           let imgArray = document.querySelectorAll(".member img");
           for (let i = 1; i < 6; i++) {
-            imgArray[i - 1].src = "/img/WJSN_THE_BLACK_2-" + i + ".webp";
+            imgArray[i - 1].src = "../img/WJSN_THE_BLACK_2-" + i + ".webp";
           }
         }
       }
@@ -732,7 +756,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  if(window.innerWidth > 991) {
+  if (window.innerWidth > 991) {
     mouseFollowerInit();
   }
 
@@ -764,5 +788,26 @@ document.addEventListener('DOMContentLoaded', function () {
       iteration += 1 / 3;
     }, 30);
   }
+
+
+  // FOOTER
+  const footerMarquee = document.querySelector(".footer-marquee");
+  let footerTextWidth = document.querySelector(".footer-marquee .text").offsetWidth;
+
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: footerMarquee,
+      start: 'top bottom',
+      toggleActions: 'play resume resume pause'
+    }
+  }).fromTo(".footer-marquee .text", {
+    x: () => -footerTextWidth * 2
+  },
+    {
+      duration: 50,
+      ease: "none",
+      x: () => "+=" + footerTextWidth,
+      repeat: -1
+    });
 
 }); //document onload

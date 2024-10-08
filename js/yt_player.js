@@ -90,11 +90,6 @@ function loadVideo() {
     function onPlayerReady() {
         newPlayer = player;
     }
-
-    function onPlayerStateChange(event) {
-        var videoStatuses = Object.entries(window.YT.PlayerState);
-        console.log(videoStatuses.find(status => status[1] === event.data)[0]);
-    }
 }
 
 if (document.readyState !== "loading") {
