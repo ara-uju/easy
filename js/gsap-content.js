@@ -516,7 +516,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     clueH.forEach((clue) => {
       clue.addEventListener("mouseover", function () {
-        document.querySelector(".backdrop img").src = "../img/scene/" + clue.getAttribute("scene") + ".png";
+        document.querySelector(".backdrop img").src = "./img/scene/" + clue.getAttribute("scene") + ".png";
         document.querySelector(".backdrop").classList.add("show");
       });
     });
@@ -573,7 +573,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
           let imgArray = document.querySelectorAll(".member img");
           for (let i = 1; i < 6; i++) {
-            imgArray[i - 1].src = "../img/WJSN_THE_BLACK_2-" + i + ".webp";
+            imgArray[i - 1].src = "./img/WJSN_THE_BLACK_2-" + i + ".webp";
           }
         }
       }
