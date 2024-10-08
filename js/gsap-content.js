@@ -8,9 +8,9 @@ let imgList = [];
 for (let i = 1; i < 11; i++) {
   imgList[i - 1] = new Image();
   if (i >= 10) {
-    imgList[i - 1].src = "/img/scene/" + i + ".png";
+    imgList[i - 1].src = "./img/scene/" + i + ".png";
   } else {
-    imgList[i - 1].src = "/img/scene/0" + i + ".png";
+    imgList[i - 1].src = "./img/scene/0" + i + ".png";
   }
 }
 
@@ -202,21 +202,6 @@ document.addEventListener('DOMContentLoaded', function () {
       yPercent: -4
     }, "<");
 
-  /*gsap.from(document.querySelectorAll(".gallery h1"), {
-    opacity: 0,
-    ease: "none",
-    scrollTrigger: {
-      trigger: document.querySelector(".gallery h1"),
-      pin: true,
-      pinSpacing: "margin",
-      start: "top top",
-      scrub: 0,
-      markers: false,
-      end: () =>  "+=" + (document.querySelector(".gallery .subsection").offsetWidth - innerWidth)
-    }
-  });*/
-
-
   //-----------------------------------------------
   // SOUNDTRACKS
 
@@ -398,8 +383,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // left side
       if (tContainer.classList.contains("track-container-left")) {
-        //trackCLeft.classList.remove("not-hovered");
-        //trackCRight.classList.add("not-hovered");
         document.querySelector(".soundtracks .container").classList.remove("hover-right");
         document.querySelector(".soundtracks .container").classList.add("hover-left");
 
