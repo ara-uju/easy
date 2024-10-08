@@ -1,32 +1,9 @@
 /* Fonts */
-/* bold */
-/*@font-face {
-	font-family: 'Neue-Helv Bold';
-	src: url('../font/HelveticaNeuBold.ttf') format('truetype');
-}*/
-
 @font-face {
 	font-family: 'Roboto';
 	font-weight: var(--font-medium);
 	src: url('https://fonts.googleapis.com/css2?family=Roboto:wght@500;700;900&display=swap');
 }
-
-/* medium */
-/*@font-face {
-	font-family: 'Neue-Helv Medium';
-	src: url('../font/HelveticaNeueMedium.ttf') format('truetype');
-	font-style: normal;
-	font-weight: 400;
-	font-stretch: normal;
-}*/
-
-/* light */
-/*@font-face {
-	font-family: 'Neue-Helv Light';
-	src: url('../font/HelveticaNeueLight.ttf') format('truetype');
-}*/
-
-
 
 /* vars */
 :root {
@@ -61,7 +38,6 @@ body,
 body {
 	background: var(--background-color);
 	color: var(--subheader-color);
-	/*font-family: 'Neue-Helv Medium';*/
 	font-family: 'Roboto';
 	transition-property: var(--background-color), var(--header-color), var(--subheader-color), var(--text-border-bg-color);
 	transition-duration: 1.8s;
@@ -235,7 +211,6 @@ section {
 .hero h1,
 .asterisk {
 	color: var(--header-color);
-	/*font-family: 'Neue-Helv Bold';*/
 	font-family: "Roboto";
 	line-height: 92%;
 	letter-spacing: -0.05px;
