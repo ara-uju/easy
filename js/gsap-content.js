@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // GALLERY
 
   let galPanel = document.querySelectorAll(".gallery .member");
-  let galWidth = (document.querySelector(".gallery .subsection").offsetWidth - innerWidth);
+  let galWidth = (document.querySelector(".gallery .subsection").offsetWidth - window.innerWidth);
 
   // enter
   gsap.from(".gallery .container", {
@@ -187,16 +187,15 @@ document.addEventListener('DOMContentLoaded', function () {
       pin: true,
       pinSpacing: "margin",
       start: "top top",
-      scrub: 1,
-      markers: false,
-      end: () => "+=" + galWidth
+      end: ()=> "+=" + galWidth,
+      scrub: 1
     }
   })
     .to(galPanel, {
       xPercent: -100 * (galPanel.length - 1) - 100,
       ease: "none"
     })
-    .to(document.querySelectorAll(".gallery img"), {
+    .to(".gallery img", {
       xPercent: 28,
       stagger: .04,
       yPercent: -4
@@ -208,9 +207,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   gsap.timeline({
     scrollTrigger: {
-      trigger: ".gallery",
+      trigger: ".gallery .container",
       start: 'top top',
-      end: ()=> galWidth*1.5,
+      end: "+=650%",
       toggleActions: 'play pause resume resume'
     }
   }).fromTo(".gallery-marquee .text", {
@@ -229,31 +228,44 @@ document.addEventListener('DOMContentLoaded', function () {
   //-----------------------------------------------
   // SOUNDTRACKS
 
-  let trackCs = document.querySelectorAll(".track-container");
-  let trackCLeft = document.querySelector(".track-container-left");
-  let trackCRight = document.querySelector(".track-container-right");
+  const soundtracksSection = document.querySelector(".soundtracks");
+  const trackCs = document.querySelectorAll(".track-container");
+  const trackCLeft = document.querySelector(".track-container-left");
+  const trackCRight = document.querySelector(".track-container-right");
   let headerRevealed = false;
 
-  gsap.timeline({
+  let soundtrackTm = gsap.timeline({
     scrollTrigger: {
-      trigger: document.querySelector(".soundtracks"),
-      start: "top 20%",
+      trigger: soundtracksSection,
+      start: "top top",
       end: "+=350%",
       scrub: true,
-      toggleActions: "play reverse play reverse"
+      toggleActions: "play reverse play reverse",
     }
-  })
-    .from(document.querySelector(".soundtracks .content"), {
+  });
+
+  // if mobile, animate line horizontally, else make it vertical
+  if (window.innerWidth <= 991) {
+    soundtrackTm.from(document.querySelector(".soundtracks .content"), {
       opacity: 0,
       duration: .2
     })
-    .to(document.querySelector(".divider span"), {
-      height: "100vh"
-    });
+      .to(document.querySelector(".divider span"), {
+        width: "100vw"
+      });
+  } else {
+    soundtrackTm.from(document.querySelector(".soundtracks .content"), {
+      opacity: 0,
+      duration: .2
+    })
+      .to(document.querySelector(".divider span"), {
+        height: "100vh"
+      });
+  }
 
   gsap.timeline({
     scrollTrigger: {
-      trigger: document.querySelector(".soundtracks"),
+      trigger: soundtracksSection,
       start: "top top",
       end: "+=350%",
       scrub: true,
@@ -264,15 +276,28 @@ document.addEventListener('DOMContentLoaded', function () {
         if (document.querySelector("body").classList.contains("THEBLACK")) {
           document.documentElement.style.setProperty('--background-color', 'var(--the-white)');
         }
+
+        gsap.to(soundtracksSection, {
+          opacity: 1,
+          duration: .4,
+          ease: "power2.out"
+        });
       },
       onLeave: () => {
         if (document.querySelector("body").classList.contains("THEBLACK")) {
           document.documentElement.style.setProperty('--background-color', 'var(--the-black)');
         }
+
+        gsap.to(soundtracksSection, {
+          delay: .4,
+          opacity: 0,
+          duration: .4,
+          ease: "power2.out"
+        });
       }
     }
   })
-    .from(document.querySelector(".soundtracks"), {
+    .from(soundtracksSection, {
       opacity: 0,
       height: "0vh",
       duration: .8,
@@ -291,10 +316,7 @@ document.addEventListener('DOMContentLoaded', function () {
         opacity: 1,
         xPercent: 0,
         duration: .4,
-        ease: "power2.out",
-        onComplete: () => {
-          //scrambled code previously here
-        }
+        ease: "power2.out"
       }, "<")
     .fromTo(trackCRight.querySelector("h1"), {
       opacity: 0,
@@ -338,126 +360,108 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       }, "<");
 
-  /*.fromTo(document.querySelectorAll(".track"), {
-    opacity: 0
-  },
-    {
-      opacity: 1,
-      stagger: 0.15,
-      duration: .5,
-      onComplete: ()=>{
-        trackCLeft.classList.add("normalize-z");
-        trackCRight.classList.add("normalize-z");
-      },
-      onLeaveBack: ()=>  {
-        trackCLeft.classList.add("normalize-z");
-        trackCRight.classList.add("normalize-z");
-      },
-      onLeave: ()=>{
-        trackCLeft.classList.remove("normalize-z");
-        trackCRight.classList.remove("normalize-z");
-      }
-    }, "<");*/
+  // desktop hover interaction
+  if (window.innerWidth > 991) {
+    trackCs.forEach((tContainer) => {
 
-  trackCs.forEach((tContainer) => {
+      tContainer.addEventListener("mouseout", function () {
+        document.querySelector(".soundtracks .container").classList.remove("hover-right");
+        document.querySelector(".soundtracks .container").classList.remove("hover-left");
 
-    tContainer.addEventListener("mouseout", function () {
-      document.querySelector(".soundtracks .container").classList.remove("hover-right");
-      document.querySelector(".soundtracks .container").classList.remove("hover-left");
+        let gtm = gsap.timeline({
+          defaults: {
+            overwrite: true
+          }
+        });
 
-      let gtm = gsap.timeline({
-        defaults: {
-          overwrite: true
-        }
-      });
-
-      gtm.to(trackCLeft, {
-        width: "50%",
-        skewX: 0,
-        duration: .2,
-        ease: "power4.out"
-      }, "<")
-        .to(trackCRight, {
+        gtm.to(trackCLeft, {
           width: "50%",
           skewX: 0,
           duration: .2,
           ease: "power4.out"
         }, "<")
-        .to(document.querySelectorAll(".inner h1"), {
-          skewX: 0,
-          duration: .2,
-          ease: "power4.out"
-        }, "<");
+          .to(trackCRight, {
+            width: "50%",
+            skewX: 0,
+            duration: .2,
+            ease: "power4.out"
+          }, "<")
+          .to(document.querySelectorAll(".inner h1"), {
+            skewX: 0,
+            duration: .2,
+            ease: "power4.out"
+          }, "<");
 
-    });
-
-    tContainer.addEventListener("mouseover", function () {
-
-      let gtm = gsap.timeline({
-        defaults: {
-          overwrite: true
-        }
       });
 
-      let duration = .15;
-      let ease = "power4.out";
-      let skew = 20;
-      let widthGrow = "80%";
-      let widthShrink = "20%";
+      tContainer.addEventListener("mouseover", function () {
 
-      // left side
-      if (tContainer.classList.contains("track-container-left")) {
-        document.querySelector(".soundtracks .container").classList.remove("hover-right");
-        document.querySelector(".soundtracks .container").classList.add("hover-left");
+        let gtm = gsap.timeline({
+          defaults: {
+            overwrite: true
+          }
+        });
 
-        gtm.to(trackCLeft, {
-          width: widthGrow,
-          skewX: -skew,
-          duration: duration,
-          ease: ease
-        }, "<")
-          .to(trackCRight, {
-            width: widthShrink,
+        let duration = .15;
+        let ease = "power4.out";
+        let skew = 20;
+        let widthGrow = "80%";
+        let widthShrink = "20%";
+
+        // left side
+        if (tContainer.classList.contains("track-container-left")) {
+          document.querySelector(".soundtracks .container").classList.remove("hover-right");
+          document.querySelector(".soundtracks .container").classList.add("hover-left");
+
+          gtm.to(trackCLeft, {
+            width: widthGrow,
             skewX: -skew,
             duration: duration,
             ease: ease
           }, "<")
-          .to(document.querySelectorAll(".inner h1"), {
+            .to(trackCRight, {
+              width: widthShrink,
+              skewX: -skew,
+              duration: duration,
+              ease: ease
+            }, "<")
+            .to(document.querySelectorAll(".inner h1"), {
+              skewX: skew,
+              duration: duration,
+              ease: ease
+            }, "<");
+        }
+        // right side
+        else {
+          document.querySelector(".soundtracks .container").classList.remove("hover-left");
+          document.querySelector(".soundtracks .container").classList.add("hover-right");
+
+          gtm.to(trackCRight, {
+            width: widthGrow,
             skewX: skew,
             duration: duration,
             ease: ease
-          }, "<");
-      }
-      // right side
-      else {
-        document.querySelector(".soundtracks .container").classList.remove("hover-left");
-        document.querySelector(".soundtracks .container").classList.add("hover-right");
+          })
+            .to(trackCLeft, {
+              width: widthShrink,
+              skewX: skew,
+              duration: duration,
+              ease: ease
+            }, "<")
+            .to(document.querySelectorAll(".inner h1"), {
+              skewX: -skew,
+              duration: duration,
+              ease: ease
+            }, "<");
+        }
 
-        gtm.to(trackCRight, {
-          width: widthGrow,
-          skewX: skew,
-          duration: duration,
-          ease: ease
-        })
-          .to(trackCLeft, {
-            width: widthShrink,
-            skewX: skew,
-            duration: duration,
-            ease: ease
-          }, "<")
-          .to(document.querySelectorAll(".inner h1"), {
-            skewX: -skew,
-            duration: duration,
-            ease: ease
-          }, "<");
-      }
-
+      });
     });
-  });
+  }
 
   gsap.timeline({
     scrollTrigger: {
-      trigger: document.querySelector(".soundtracks"),
+      trigger: soundtracksSection,
       start: "top center",
       toggleActions: "play resume resume resume"
     }
@@ -479,15 +483,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   //-----------------------------------------------
   // CLUE
-
-  /*gsap.from(document.querySelector(".backdrop"), {
-    scrollTrigger: {
-      trigger: document.querySelector("section.clue"),
-      start: "top top",
-      pin: document.querySelector(".backdrop")
-    }
-  });*/
-
+  
   let clueSection = document.querySelector(".clue");
 
   if (clueSection) {
@@ -497,35 +493,76 @@ document.addEventListener('DOMContentLoaded', function () {
         start: "top center",
         end: "bottom bottom",
         scrub: 1,
-        toggleActions: "play resume resume reverse"
+        toggleActions: "play resume resume reverse",
+        onEnter: ()=> {
+          gsap.fromTo(".backdrop-container", {
+            opacity: 0
+          },{
+            opacity: 1,
+            duration: .25,
+            ease: "power1.out"
+          });
+        },
       }
-    })
-      .to(document.querySelector(".backdrop-container"), {
-        opacity: 1,
-        duration: .25,
-        ease: "power1.out"
-      }, "<")
-      .to(document.querySelectorAll(".clue-h.slow"), {
+    }).to(".clue-h.slow", {
         y: "-120px"
-      }, "<");
+      });
 
 
     // add another transition for the parent container, so as to fade out immediately after scrolling down to footer 
     // (headers take too long to fade-out as they need the stagger for the initial reveal)
-    let clueH = document.querySelectorAll(".clue-h");
+    const clueH = document.querySelectorAll(".clue-h");
+    const backdrop = document.querySelector(".backdrop");
+    const backdropsImg = document.querySelector(".backdrop img");
 
-    clueH.forEach((clue) => {
-      clue.addEventListener("mouseover", function () {
-        document.querySelector(".backdrop img").src = "./img/scene/" + clue.getAttribute("scene") + ".png";
-        document.querySelector(".backdrop").classList.add("show");
+    // mouse hover event for desktop
+    if (window.innerWidth >= 919) {
+      clueH.forEach((clue) => {
+        clue.addEventListener("mouseover", () => {
+          showClueImage(clue)
+        });
       });
-    });
 
-    clueH.forEach((clue) => {
-      clue.addEventListener("mouseout", function () {
-        document.querySelector(".backdrop").classList.remove("show");
+      clueH.forEach((clue) => {
+        clue.addEventListener("mouseout", () => {
+          hideClueImage();
+        });
       });
-    });
+    } else {
+      // scrolltrigger reveal if mobile device
+      clueH.forEach((clue) => {
+        ScrollTrigger.create({
+          trigger: clue,
+          start: "top 62%",
+          end: "top 30%",
+          onEnter: () => {
+            showClueImage(clue);
+          },
+          onEnterBack: () => {
+            showClueImage(clue);
+          },
+          onLeave: () => {
+            hideClueImage(clue);
+          },
+          onLeaveBack: () => {
+            hideClueImage(clue);
+          }
+        });
+      });
+    }
+
+    function showClueImage(clue) {
+      backdropsImg.src = "./img/scene/" + clue.getAttribute("scene") + ".png";
+      backdrop.classList.add("show");
+      clue.classList.add("hovered");
+    }
+
+    function hideClueImage(clue) {
+      backdrop.classList.remove("show");
+      clue.classList.remove("hovered");
+    }
+
+
   }
 
 
@@ -549,7 +586,6 @@ document.addEventListener('DOMContentLoaded', function () {
     scrollTrigger: {
       trigger: codeSection,
       start: "top center",
-      markers: true,
       toggleActions: "play resume play reverse",
       onEnter: () => {
         inputEl.click();
