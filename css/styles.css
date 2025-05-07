@@ -1,8 +1,8 @@
-/* section {
+section {
 	border: 2px orange solid;
-	overflow-x: hidden;
+	/* overflow-x: hidden; */
 }
-
+/* 
 .container {
 	background-color: rgba(76, 76, 76, .5);
 } */
@@ -11,9 +11,9 @@
 
 /* Fonts */
 @font-face {
-	font-family: 'Roboto';
-	font-weight: var(--font-medium);
-	src: url('https://fonts.googleapis.com/css2?family=Roboto:wght@500;700;900&display=swap');
+	font-family: "Roboto", sans-serif;
+	font-weight: var(--font-semibold);
+	src: url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 }
 
 /* vars */
@@ -29,7 +29,7 @@
 
 	--font-black: 900;
 	--font-bold: 700;
-	--font-medium: 500;
+	--font-semibold: 500;
 
 	--main-padding: 2.4rem;
 	--mobile-padding: 1.25rem;
@@ -50,10 +50,15 @@ body,
 body {
 	background: var(--background-color);
 	color: var(--subheader-color);
-	font-family: 'Roboto';
+	font-family: "Roboto", sans-serif;
 	transition-property: var(--background-color), var(--header-color), var(--subheader-color), var(--text-border-bg-color);
 	transition-duration: 1.8s;
 	overflow-x: hidden;
+}
+
+p {
+	font-family: "Roboto", sans-serif;
+	font-size: 1.25rem;
 }
 
 section {
@@ -85,7 +90,7 @@ section {
 .preloader::before {
 	content: '';
 	position: fixed;
-	z-index: 99999;
+	z-index: 999;
 	top: 0;
 	left: 0;
 	bottom: 0;
@@ -251,6 +256,7 @@ span.space {
 .hero h1.border {
 	filter: blur(1 px);
 	color: var(--text-border-bg-color);
+	-webkit-text-fill-color: var(--text-border-bg-color);
 	padding-bottom: 10px;
 }
 
@@ -296,11 +302,12 @@ span.space {
 
 h1.border,
 .subheader-lower-wrapper .border {
-	-webkit-text-stroke: 0.12rem var(--the-grey) !important;
+	-webkit-text-stroke: 0.25rem var(--the-grey) !important;
+	paint-order: stroke;
 }
 
 .code h1.border {
-	-webkit-text-stroke: 0.12rem var(--the-white) !important;
+	-webkit-text-stroke: 0.25rem var(--the-white) !important;
 	opacity: 0.9;
 }
 
@@ -328,12 +335,13 @@ h1.border,
 .member-focusable .bona-tag:hover,
 .member-focusable .eunseo-tag:hover {
 	color: var(--header-color);
-	-webkit-text-stroke: 0.12rem var(--header-color) !important;
+	-webkit-text-stroke: 0.25rem var(--header-color) !important;
 }
 
 /***** GALLERY *****/
 .gallery {
 	padding: 0;
+	overflow-y: hidden;
 }
 
 .gallery .container {
@@ -689,7 +697,6 @@ footer .text-marquee .text {
 .soundtracks {
 	max-width: 100vw;
 	min-height: unset;
-	/*padding-bottom: 50vh;*/
 	overflow: hidden;
 	display: flex;
 }
@@ -905,6 +912,12 @@ footer .text-marquee .text {
 	gap: 20vh;
 }
 
+@media screen and (max-width: 990px) {
+	.clue-h {
+		pointer-events: none;
+	}
+}
+
 @media screen and (max-width: 767px) {
 	.clue .container {
 		gap: 6rem;
@@ -1052,7 +1065,8 @@ footer .text-marquee .text {
 	gap: 1em;
 	flex-flow: column;
 	align-items: center;
-	justify-content: center;
+	justify-content: start;
+	height: 40dvh;
 }
 
 .code-message {
@@ -1069,10 +1083,7 @@ footer .text-marquee .text {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	top: 0;
-	left: 0;
-	right: 0;
-	height: 100svh;
+	inset: 0;
 	opacity: 0;
 	z-index: -1;
 	overflow: hidden;
@@ -1112,7 +1123,7 @@ input {
 	background: transparent;
 	border: 0;
 	color: transparent;
-	font-family: 'Roboto';
+	font-family: "Roboto", sans-serif;
 	font-weight: 900;
 	text-transform: uppercase;
 	/*-webkit-text-stroke: 0.12rem var(--the-grey) !important;*/
@@ -1131,7 +1142,7 @@ input:focus-within input:focus {
 	bottom: 0;
 	height: 8.4rem;
 	text-align: center;
-	font-family: 'Roboto';
+	font-family: "Roboto", sans-serif;
 	font-weight: 900;
 	color: var(--the-black);
 	z-index: 5;
@@ -1205,12 +1216,24 @@ input:focus-within input:focus {
 }
 
 footer {
-	font-family: 'Roboto';
 	position: relative;
 	width: 100%;
 	white-space: nowrap;
 	z-index: 10;
 	pointer-events: none;
+	font-size: 1.25rem;
+}
+
+footer,
+footer * {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 500;
+}
+
+@media screen and (max-width: 767px) {
+	footer {
+		font-size: 1.5rem;
+	}
 }
 
 @keyframes blinking {
@@ -1233,7 +1256,7 @@ footer {
 h1,
 .mouse .inner {
 	font-size: 7.5rem;
-	font-family: 'Roboto';
+	font-family: "Roboto", sans-serif;
 	text-transform: uppercase;
 	letter-spacing: .3px;
 }
@@ -1251,6 +1274,26 @@ h1,
 	pointer-events: none;
 	mix-blend-mode: difference;
 	overflow: hidden;
+	animation: none;
+}
+
+.preloader .cursor-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.preloader .mouse {
+	animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg); /* Start at 0 degrees */
+    }
+    to {
+        transform: rotate(360deg); /* End at 360 degrees */
+    }
 }
 
 @media screen and (max-width: 991px) {

@@ -14,10 +14,6 @@ for (let i = 1; i < 11; i++) {
   }
 }
 
-window.onpagehide = () => {
-  window.scrollTo(0, 0);
-}
-
 document.addEventListener('DOMContentLoaded', function () {
 
   window.scroll(0, 0);
@@ -30,41 +26,49 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.querySelector(".mouse").style.transform = "translate3d(" + document.querySelector(".asterisk-container").parentNode.getBoundingClientRect().left + "px, " + document.querySelector(".asterisk-container").parentNode.getBoundingClientRect().top + "px,0px)";
 
+  // Reveal
   gsap.timeline()
     .to(document.querySelector(".preloader:before"), {
+      delay: 1,
       opacity: 0,
       duration: .8,
       onComplete: () => {
         document.querySelector("body").classList.remove("preloader");
+
+        // init mouse position after loading screen
+        gsap.to(".mouse", {
+          rotation: "360deg",
+          duration: 3,
+          repeat: -1,
+          ease: Linear.easeNone
+        });
+        gsap.to(".mouse", {
+          delay: 1.4,
+          opacity: 1,
+          duration: 1,
+          ease: "power1.out"
+        });
+
       }
     })
-    .to(document.querySelector(".mouse"), {
-      rotation: "360deg",
-      duration: 3,
-      repeat: -1,
-      ease: Linear.easeNone
-    })
-    .from(document.querySelector(".mouse"), {
-      delay: 1.4,
+    .to(".mouse", {
       opacity: 0,
-      duration: 1,
+      duration: .8,
       ease: "power1.out"
-    }, "<");
-
-  // Reveal
-  gsap.timeline().fromTo(document.querySelector(".subheader-wrapper"), {
-    xPercent: -14,
-    opacity: 0
-  },
-    {
-      xPercent: 0,
-      opacity: 1,
-      stagger: .1,
-      delay: 0.5,
-      duration: 1,
-      ease: "power2.out"
-    })
-    .to(document.querySelectorAll(".header-wrapper .overlay"), {
+    }, "<")
+    .fromTo(".subheader-wrapper", {
+      xPercent: -14,
+      opacity: 0
+    },
+      {
+        xPercent: 0,
+        opacity: 1,
+        stagger: .1,
+        delay: 0.5,
+        duration: 1,
+        ease: "power2.out"
+      })
+    .to(".header-wrapper .overlay", {
       transform: "skew(-25deg)",
       delay: .5,
       width: 0,
@@ -72,13 +76,13 @@ document.addEventListener('DOMContentLoaded', function () {
       duration: 1,
       ease: "power2.out"
     }, "<")
-    .from(document.querySelectorAll(".header-wrapper h1"), {
+    .from(".header-wrapper h1", {
       xPercent: -14,
       stagger: .1,
       duration: 1,
       ease: "power2.out"
     }, "<")
-    .fromTo(document.querySelectorAll(".subheader-upper-wrapper .member-tag"), {
+    .fromTo(".subheader-upper-wrapper .member-tag", {
       xPercent: -10,
       opacity: 0
     },
@@ -90,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
         duration: .8,
         ease: "power2.out"
       }, "<")
-    .fromTo(document.querySelectorAll(".subheader-lower-wrapper .member-tag"), {
+    .fromTo(".subheader-lower-wrapper .member-tag", {
       xPercent: -10,
       opacity: 0
     },
@@ -101,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
         duration: .8,
         ease: "power2.out"
       }, "<")
-    .fromTo(document.querySelectorAll(".hero .single"), {
+    .fromTo(".hero .single", {
       xPercent: -20,
       opacity: 0
     },
@@ -111,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
         duration: 1,
         ease: "power2.out"
       }, "<")
-    .to(document.querySelectorAll(".member-tag .overlay"), {
+    .to(".member-tag .overlay", {
       transform: "skew(-25deg)",
       delay: .15,
       width: 0,
@@ -155,10 +159,10 @@ document.addEventListener('DOMContentLoaded', function () {
       markers: false
     }
   })
-    .to(document.querySelectorAll(".hero h1"), {
+    .to(".hero h1", {
       filter: "blur(20px)"
     })
-    .to(document.querySelectorAll(".hero h1"), {
+    .to(".hero h1", {
       opacity: 0,
     });
 
@@ -187,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
       pin: true,
       pinSpacing: "margin",
       start: "top top",
-      end: ()=> "+=" + galWidth,
+      end: () => "+=" + galWidth,
       scrub: 1
     }
   })
@@ -246,7 +250,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // if mobile, animate line horizontally, else make it vertical
   if (window.innerWidth <= 991) {
-    soundtrackTm.from(document.querySelector(".soundtracks .content"), {
+    soundtrackTm.from(".soundtracks .content", {
       opacity: 0,
       duration: .2
     })
@@ -254,11 +258,11 @@ document.addEventListener('DOMContentLoaded', function () {
         width: "100vw"
       });
   } else {
-    soundtrackTm.from(document.querySelector(".soundtracks .content"), {
+    soundtrackTm.from(".soundtracks .content", {
       opacity: 0,
       duration: .2
     })
-      .to(document.querySelector(".divider span"), {
+      .to(".divider span", {
         height: "100vh"
       });
   }
@@ -297,13 +301,13 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
   })
-    .from(soundtracksSection, {
-      opacity: 0,
-      height: "0vh",
-      duration: .8,
-      ease: "power1.out"
-    }, "<")
-    .from(document.querySelector(".soundtracks h3"), {
+    // .from(soundtracksSection, {
+    //   opacity: 0,
+    //   height: "0vh",
+    //   duration: .8,
+    //   ease: "power1.out"
+    // }, "<")
+    .from(".soundtracks h3", {
       opacity: 0,
       xPercent: -15,
       duration: .8
@@ -386,7 +390,7 @@ document.addEventListener('DOMContentLoaded', function () {
             duration: .2,
             ease: "power4.out"
           }, "<")
-          .to(document.querySelectorAll(".inner h1"), {
+          .to(".inner h1", {
             skewX: 0,
             duration: .2,
             ease: "power4.out"
@@ -425,7 +429,7 @@ document.addEventListener('DOMContentLoaded', function () {
               duration: duration,
               ease: ease
             }, "<")
-            .to(document.querySelectorAll(".inner h1"), {
+            .to(".inner h1", {
               skewX: skew,
               duration: duration,
               ease: ease
@@ -448,7 +452,7 @@ document.addEventListener('DOMContentLoaded', function () {
               duration: duration,
               ease: ease
             }, "<")
-            .to(document.querySelectorAll(".inner h1"), {
+            .to(".inner h1", {
               skewX: -skew,
               duration: duration,
               ease: ease
@@ -470,7 +474,7 @@ document.addEventListener('DOMContentLoaded', function () {
       onStart: () => {
         if (document.querySelector("body").classList.contains("THEBLACK")) {
 
-          gsap.to(document.querySelector("body"), {
+          gsap.to("body", {
             backgroundColor: "var(--the-white)",
             duration: 1.4,
             ease: "power2.out"
@@ -483,7 +487,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   //-----------------------------------------------
   // CLUE
-  
+
   let clueSection = document.querySelector(".clue");
 
   if (clueSection) {
@@ -492,12 +496,13 @@ document.addEventListener('DOMContentLoaded', function () {
         trigger: clueSection,
         start: "top center",
         end: "bottom bottom",
+        markers: true,
         scrub: 1,
         toggleActions: "play resume resume reverse",
-        onEnter: ()=> {
+        onEnter: () => {
           gsap.fromTo(".backdrop-container", {
             opacity: 0
-          },{
+          }, {
             opacity: 1,
             duration: .25,
             ease: "power1.out"
@@ -505,8 +510,8 @@ document.addEventListener('DOMContentLoaded', function () {
         },
       }
     }).to(".clue-h.slow", {
-        y: "-120px"
-      });
+      y: "-120px"
+    });
 
 
     // add another transition for the parent container, so as to fade out immediately after scrolling down to footer 
@@ -516,16 +521,18 @@ document.addEventListener('DOMContentLoaded', function () {
     const backdropsImg = document.querySelector(".backdrop img");
 
     // mouse hover event for desktop
-    if (window.innerWidth >= 919) {
+    if (window.innerWidth > 1024) {
       clueH.forEach((clue) => {
         clue.addEventListener("mouseover", () => {
-          showClueImage(clue)
+          showClueImage(clue);
+          console.log("mouse in");
         });
       });
 
       clueH.forEach((clue) => {
         clue.addEventListener("mouseout", () => {
           hideClueImage();
+          console.log("mouse out");
         });
       });
     } else {
@@ -533,19 +540,24 @@ document.addEventListener('DOMContentLoaded', function () {
       clueH.forEach((clue) => {
         ScrollTrigger.create({
           trigger: clue,
-          start: "top 62%",
-          end: "top 30%",
+          start: "top 52%",
+          end: "top 10%",
+          markers: { startColor: "pink", endColor: "orange" },
           onEnter: () => {
             showClueImage(clue);
+            clue.classList.add("hovered");
           },
           onEnterBack: () => {
             showClueImage(clue);
+            clue.classList.add("hovered");
           },
           onLeave: () => {
-            hideClueImage(clue);
+            hideClueImage();
+            clue.classList.remove("hovered");
           },
           onLeaveBack: () => {
-            hideClueImage(clue);
+            hideClueImage();
+            clue.classList.remove("hovered");
           }
         });
       });
@@ -554,12 +566,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function showClueImage(clue) {
       backdropsImg.src = "./img/scene/" + clue.getAttribute("scene") + ".png";
       backdrop.classList.add("show");
-      clue.classList.add("hovered");
     }
 
-    function hideClueImage(clue) {
+    function hideClueImage() {
       backdrop.classList.remove("show");
-      clue.classList.remove("hovered");
     }
 
 
@@ -623,7 +633,7 @@ document.addEventListener('DOMContentLoaded', function () {
       duration: 1,
       ease: "power1.out"
     }, "<")
-    .from(document.querySelector(".code-message-wrapper"), {
+    .from(".code-message-wrapper", {
       opacity: 0,
       delay: .15,
       duration: 1.2,
@@ -634,20 +644,20 @@ document.addEventListener('DOMContentLoaded', function () {
       //   }
       // }
     }, "<")
-    .to(document.querySelector(".code-message-wrapper"), {
+    .to(".code-message-wrapper", {
       opacity: 0,
       delay: 6,
       duration: 1.5,
       ease: "power2.out"
     });
 
-  codeSection.addEventListener("click", function () {
-    // hide input bar
-    inputMirror.classList.remove("blinking");
-    inputMirror.classList.remove("solid");
-  });
+  // codeSection.addEventListener("click", function () {
+  //   // hide input bar
+  //   inputMirror.classList.remove("blinking");
+  //   inputMirror.classList.remove("solid");
+  // });
 
-  inputEl.addEventListener("click", function (e) {
+  codeSection.addEventListener("click", function (e) {
     e.stopPropagation();
 
     inputEl.focus();
@@ -658,7 +668,8 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
 
-  inputEl.addEventListener("input", function () {
+  inputEl.addEventListener("input", function (e) {
+    e.stopPropagation();
 
     // solid input bar
     inputMirror.classList.add("solid");
@@ -752,12 +763,12 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
         }
-      }).to(document.querySelector("#video"), {
+      }).to("#video", {
         delay: 1,
         opacity: 1,
         duration: 1.8,
         ease: "power3.out"
-      }, ">").to(document.querySelector(".code .overlay"), {
+      }, ">").to(".code .overlay", {
         opacity: 0,
         delay: 2,
         duration: 2.5,
@@ -781,11 +792,11 @@ document.addEventListener('DOMContentLoaded', function () {
   function mouseFollowerInit() {
     window.addEventListener("mousemove", function (e) {
       if (cursorActive) {
-        gsap.to(document.querySelector(".mouse"), {
+        gsap.to(".mouse", {
           x: e.clientX + 5,
           y: e.clientY - 35,
           transformOrigin: "center",
-          ease: 'power3.out'
+          ease: 'power5.out'
         });
       }
 

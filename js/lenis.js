@@ -6,5 +6,12 @@ document.addEventListener('DOMContentLoaded', function () {
     requestAnimationFrame(raf);
   }
 
+  if (history.scrollRestoration) {
+    history.scrollRestoration = "manual";
+  }
+
+  window.scrollTo(0, {immediate: true, force:true});
+  lenis.scrollTo(0, {immediate: true, force:true});
+
   requestAnimationFrame(raf);
 });
