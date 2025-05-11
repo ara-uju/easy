@@ -113,7 +113,16 @@ document.addEventListener('DOMContentLoaded', function () {
         xPercent: 0,
         opacity: 1,
         duration: 1,
-        ease: "power2.out"
+        ease: "power2.out",
+        onComplete: () => {
+
+          document.querySelector(".hero").classList.add("member-focusable");
+
+          if (!cursorActive) {
+            //document.querySelector(".cursor-container").appendChild(document.querySelector(".asterisk-container"));
+            cursorActive = true;
+          }
+        }
       }, "<")
     .to(".member-tag .overlay", {
       transform: "skew(-25deg)",
@@ -121,16 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
       width: 0,
       stagger: .25,
       duration: 1,
-      ease: "power2.out",
-      onComplete: () => {
-
-        document.querySelector(".hero").classList.add("member-focusable");
-
-        if (!cursorActive) {
-          //document.querySelector(".cursor-container").appendChild(document.querySelector(".asterisk-container"));
-          cursorActive = true;
-        }
-      }
+      ease: "power2.out"
     }, "<");
 
   document.querySelectorAll(".member-tag").forEach((member) => {
@@ -541,8 +541,8 @@ document.addEventListener('DOMContentLoaded', function () {
         ScrollTrigger.create({
           trigger: clue,
           start: "top 52%",
-          end: "top 10%",
-          markers: { startColor: "pink", endColor: "orange" },
+          end: "+=320px",
+          // markers: { startColor: "pink", endColor: "orange" },
           onEnter: () => {
             showClueImage(clue);
             clue.classList.add("hovered");
@@ -637,12 +637,7 @@ document.addEventListener('DOMContentLoaded', function () {
       opacity: 0,
       delay: .15,
       duration: 1.2,
-      ease: "power2.in",
-      // onEnter: () => {
-      //   if (document.querySelector(".code-message h2")) {
-      //     scrambleText(document.querySelector(".code-message h2"), "CRACK THE CODE:");
-      //   }
-      // }
+      ease: "power2.in"
     }, "<")
     .to(".code-message-wrapper", {
       opacity: 0,
@@ -650,12 +645,6 @@ document.addEventListener('DOMContentLoaded', function () {
       duration: 1.5,
       ease: "power2.out"
     });
-
-  // codeSection.addEventListener("click", function () {
-  //   // hide input bar
-  //   inputMirror.classList.remove("blinking");
-  //   inputMirror.classList.remove("solid");
-  // });
 
   codeSection.addEventListener("click", function (e) {
     e.stopPropagation();
@@ -687,7 +676,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const regex = /[a-zA-Z]+/;
 
     // check if input contains letters
-    if (regex.test(inputEl.value)) {
+    if (regex.test(inputEl.value) && !lastSequence) {
       //console.log("alphabetical chars input");
       tries += 1;
     }
@@ -709,7 +698,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if ((inputEl.value == "210512" || inputEl.value === "120521" || inputEl.value == "220705" || inputEl.value == "050722") && !lastSequence) {
-
       lastSequence = true;
 
       clearTimeout(keyTimeout);
@@ -730,8 +718,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
           let codename = "";
 
+          if (inputEl.value == "210512" || inputEl.value === "120521" || inputEl.value == "220705" || inputEl.value == "050722") {
+            let keyTimeout = setTimeout(() => {
+              document.querySelector(".code .container").style.display = "none";
+              document.querySelector(".input-container").remove();
+              document.querySelector(".code .overlay").remove();
+              clearTimeout(keyTimeout);
+            }, 5000);
+
+            document.querySelector(".clue").remove();
+            ScrollTrigger.refresh();
+          }
+
           if (inputEl.value == "210512" || inputEl.value === "120521") {
             codename = "THEBLACK";
+
+            document.querySelector('#vid1').play();
 
           } else if (inputEl.value == "220705" || inputEl.value == "050722") {
             codename = "MERMAID";
@@ -739,7 +741,12 @@ document.addEventListener('DOMContentLoaded', function () {
             document.documentElement.style.setProperty('--header-color', '#46D9E9');
             document.documentElement.style.setProperty('--subheader-color', '#46D9E9');
 
-            document.querySelector(".cursor-container").remove();
+            // document.querySelector(".cursor-container").remove();
+            document.querySelector('main').remove();
+            ScrollTrigger.refresh();
+
+            document.querySelector('#vid2').play();
+            // videojs('vid2').play();
           }
 
           newMsg.innerHTML = "codename: " + codename;
