@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
       start: "top top",
       end: "+=80%",
       scrub: 1,
-      markers: false
+      // markers: false
     }
   })
     .to(".hero h1", {
@@ -273,7 +273,7 @@ document.addEventListener('DOMContentLoaded', function () {
       start: "top top",
       end: "+=350%",
       scrub: true,
-      markers: false,
+      // markers: false,
       pin: true,
       toggleActions: "play reverse play reverse",
       onEnterBack: () => {
@@ -496,7 +496,7 @@ document.addEventListener('DOMContentLoaded', function () {
         trigger: clueSection,
         start: "top center",
         end: "bottom bottom",
-        markers: true,
+        // markers: true,
         scrub: 1,
         toggleActions: "play resume resume reverse",
         onEnter: () => {
@@ -765,8 +765,8 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .to(newMsg, {
               opacity: 0,
-              delay: 1.5,
-              duration: 1.2
+              delay: 1.25,
+              duration: 1
             });
 
         }

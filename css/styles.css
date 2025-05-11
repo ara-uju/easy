@@ -1,13 +1,5 @@
-section {
-	border: 2px orange solid;
-	/* overflow-x: hidden; */
-}
-/* 
-.container {
-	background-color: rgba(76, 76, 76, .5);
-} */
 
-/******************** DEBU ENVIROMENT ABOVE ************************/
+/******************** MORE WOMEN NEED TO BE PUT IN SUITS ************************/
 
 /* Fonts */
 @font-face {
@@ -1398,4 +1390,57 @@ h1,
 	h2.msg {
 		font-size: clamp(1.2rem, 12vw, 3.5rem) !important;
 	}
+}
+
+.about-container {
+	position: fixed;
+	top: var(--main-padding);
+	left: var(--main-padding);
+	z-index: 50;
+}
+
+.about-content {
+	color: var(--the-grey);
+	background-color: var(--the-black);
+	padding: 2.5rem 1.5rem;
+    left: 1.8rem;
+	font-size: 1rem;
+	pointer-events: none;
+	opacity: 0;
+	width: 18rem;
+	position: absolute;
+	transition: opacity .5s ease;
+}
+
+.about-container p {
+	color: rgba(255,255,255,.5);
+}
+
+.about-icon {
+	position: absolute;
+	overflow: hidden;
+	color: var(--the-black);
+	background-color: var(--the-grey);
+	width: 1.825rem;
+	height: 1.825rem;
+	font-size: 1.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 1s ease;
+}
+
+.THEBLACK .about-icon {
+	color: var(--the-white);
+	background-color: var(--the-black);
+}
+
+.about-container:hover .about-content {
+	opacity: 1;
+	pointer-events: all;
+}
+
+a,
+span.highlight {
+	color: var(--the-white);
 }
