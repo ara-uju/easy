@@ -954,9 +954,14 @@ footer .text-marquee .text {
 	position: relative;
 	width: 100%;
 	height: auto;
-	top: -10%;
 	transform: scale(1.05);
 	transition: all 1.2s ease;
+}
+
+@media screen and (max-width: 1024px) {
+	.backdrop img {
+		top: -10%;
+	}
 }
 
 .backdrop.show img {
