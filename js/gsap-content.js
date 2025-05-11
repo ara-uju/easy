@@ -525,14 +525,14 @@ document.addEventListener('DOMContentLoaded', function () {
       clueH.forEach((clue) => {
         clue.addEventListener("mouseover", () => {
           showClueImage(clue);
-          console.log("mouse in");
+          // console.log("mouse in");
         });
       });
 
       clueH.forEach((clue) => {
         clue.addEventListener("mouseout", () => {
           hideClueImage();
-          console.log("mouse out");
+          // console.log("mouse out");
         });
       });
     } else {
