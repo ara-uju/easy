@@ -14,9 +14,11 @@ for (let i = 1; i < 11; i++) {
   }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+document.fonts.ready.then(function() {
 
   window.scroll(0, 0);
+
+
 
   //-----------------------------------------------
   // HERO
@@ -145,6 +147,20 @@ document.addEventListener('DOMContentLoaded', function () {
     member.addEventListener("mouseout", () => {
       if (document.querySelector(".hero .container")) {
         document.querySelector(".hero .container").classList.remove(memberFocus + "-focus");
+      }
+    });
+
+    member.addEventListener("click", () => {
+      if (member.classList.contains('seola-tag')) {
+       window.open('https://www.instagram.com/seola_s/', '_blank'); 
+      }
+      else if (member.classList.contains('bona-tag')) {
+       window.open('https://www.instagram.com/bn_95819/', '_blank'); 
+      }
+      else if(member.classList.contains('exy-tag')) {
+        window.open('https://www.instagram.com/exychu__/', '_blank');
+      } else if (member.classList.contains('eunseo-tag')) {
+        window.open('https://www.instagram.com/eeunseo._.v/', '_blank');
       }
     });
   });

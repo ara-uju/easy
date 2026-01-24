@@ -1129,6 +1129,43 @@ video {
 	pointer-events: all;
 }
 
+.vid-link {
+	position: absolute;
+	opacity: 0;
+	top: calc(var(--main-padding) - .275rem);
+	right: var(--main-padding);
+	font-size: 2rem;
+	color: var(--header-color);
+	background-color: var(--background-color);
+	padding: .25rem .5rem;
+	pointer-events: none;
+	visibility: hidden;
+	transition-delay: .1s;
+	transition: opacity .5s ease;
+}
+
+.THEBLACK .vid-link.link1,
+.MERMAID .vid-link.link2 {
+	pointer-events: all;
+	visibility: visible;
+	opacity: .15;
+}
+
+.vid-link.link1 {
+	background-color: var(--the-black);
+	color: var(--the-white);
+}
+
+.vid-link.link2 {
+	background-color: #46D9E9;
+	color: var(--the-white);
+}
+
+.THEBLACK .vid-link.link1:hover,
+.MERMAID .vid-link.link2:hover {
+	opacity: .8;
+}
+
 @media (orientation: portrait) {
 	video {
 		transform: rotate(-90deg);
@@ -1401,6 +1438,7 @@ h1,
 	position: fixed;
 	top: var(--main-padding);
 	left: var(--main-padding);
+	mix-blend-mode: exclusion;
 	z-index: 50;
 }
 
