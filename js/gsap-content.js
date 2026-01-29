@@ -14,7 +14,7 @@ for (let i = 1; i < 11; i++) {
   }
 }
 
-document.fonts.ready.then(function() {
+document.fonts.ready.then(function () {
 
   window.scroll(0, 0);
 
@@ -152,12 +152,12 @@ document.fonts.ready.then(function() {
 
     member.addEventListener("click", () => {
       if (member.classList.contains('seola-tag')) {
-       window.open('https://www.instagram.com/seola_s/', '_blank'); 
+        window.open('https://www.instagram.com/seola_s/', '_blank');
       }
       else if (member.classList.contains('bona-tag')) {
-       window.open('https://www.instagram.com/bn_95819/', '_blank'); 
+        window.open('https://www.instagram.com/bn_95819/', '_blank');
       }
-      else if(member.classList.contains('exy-tag')) {
+      else if (member.classList.contains('exy-tag')) {
         window.open('https://www.instagram.com/exychu__/', '_blank');
       } else if (member.classList.contains('eunseo-tag')) {
         window.open('https://www.instagram.com/eeunseo._.v/', '_blank');
@@ -185,41 +185,63 @@ document.fonts.ready.then(function() {
   //-----------------------------------------------
   // GALLERY
 
-  let galPanel = document.querySelectorAll(".gallery .member");
+  const gallerySection = document.querySelector('.gallery');
+  const gallerySectionContainer = gallerySection.querySelector('.container');
+  const galPanel = document.querySelectorAll(".gallery .member");
+  const galleryImg = document.querySelectorAll('.gallery img');
+
   let galWidth = (document.querySelector(".gallery .subsection").offsetWidth - window.innerWidth);
 
-  // enter
-  gsap.from(".gallery .container", {
+  // reveal
+  gsap.from(gallerySectionContainer, {
     scrollTrigger: {
-      trigger: ".gallery",
+      trigger: gallerySection,
       start: "top 60%",
       end: "+=100%",
-      scrub: 1
+      scrub: 1,
+      markers: true,
     },
     opacity: 0,
     yPercent: 80,
     filter: "blur(10px)"
   });
 
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: ".gallery",
-      pin: true,
-      pinSpacing: "margin",
-      start: "top top",
-      end: () => "+=" + galWidth,
-      scrub: 1
+  // pin gallery section
+  let panelAnimation = gsap.timeline({
+      scrollTrigger: {
+        trigger: gallerySection,
+        pin: true,
+        pinSpacing: "margin",
+        start: "top top",
+        end: () => "+=" + galWidth,
+        scrub: 1
+      },
     }
-  })
+  )
     .to(galPanel, {
       xPercent: -100 * (galPanel.length - 1) - 100,
-      ease: "none"
-    })
-    .to(".gallery img", {
-      xPercent: 28,
-      stagger: .04,
-      yPercent: -4
-    }, "<");
+      ease: "none",
+      duration: 1
+    });
+
+  // img parallax effect
+  galleryImg.forEach((img) => {
+    gsap.fromTo(img, {
+      xPercent: -5,
+      yPercent: 2
+    }, {
+      scrollTrigger: {
+        trigger: img,
+        containerAnimation: panelAnimation,
+        start: "left right",
+        end: "right left+=2",
+        scrub: 1,
+      },
+      xPercent: 30,
+      yPercent: -2,
+      ease: 'power2.out'
+    });
+  });
 
 
   // Gallery Marquee
@@ -227,7 +249,7 @@ document.fonts.ready.then(function() {
 
   gsap.timeline({
     scrollTrigger: {
-      trigger: ".gallery .container",
+      trigger: gallerySectionContainer,
       start: 'top top',
       end: "+=650%",
       toggleActions: 'play pause resume resume'

@@ -390,6 +390,10 @@ h1.border,
 	}
 }
 
+.gallery {
+	margin-top: -70svh;
+}
+
 .gallery .member h1 {
 	font-size: 8rem;
 }
@@ -468,8 +472,8 @@ h1.border,
 	.gallery .member.bona .img-container img {
 		height: 100%;
 		width: auto;
-		top: 83px;
-		left: 16px;
+		top: 5rem;
+		left: -5rem;
 	}
 
 	.THEBLACK .gallery .member.bona .img-container img {
