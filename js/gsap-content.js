@@ -1,4 +1,3 @@
-console.clear();
 gsap.registerPlugin(ScrollTrigger);
 
 
@@ -8,17 +7,15 @@ let imgList = [];
 for (let i = 1; i < 11; i++) {
   imgList[i - 1] = new Image();
   if (i >= 10) {
-    imgList[i - 1].src = "../img/scene/" + i + ".png";
+    imgList[i - 1].src = "./img/scene/" + i + ".png";
   } else {
-    imgList[i - 1].src = "../img/scene/0" + i + ".png";
+    imgList[i - 1].src = "./img/scene/0" + i + ".png";
   }
 }
 
 document.fonts.ready.then(function () {
 
-  window.scroll(0, 0);
-
-
+  const body = document.querySelector("body");
 
   //-----------------------------------------------
   // HERO
@@ -30,19 +27,20 @@ document.fonts.ready.then(function () {
 
   // Reveal
   gsap.timeline()
-    .to(document.querySelector(".preloader:before"), {
+    .to("div.preloader", {
       delay: 1,
       opacity: 0,
       duration: .8,
       onComplete: () => {
-        document.querySelector("body").classList.remove("preloader");
+        gsap.set('div.preloader', {visibility:"hidden", display:"none"});
+        body.classList.remove('preloader');
 
         // init mouse position after loading screen
         gsap.to(".mouse", {
           rotation: "360deg",
           duration: 3,
           repeat: -1,
-          ease: Linear.easeNone
+          ease: 'none'
         });
         gsap.to(".mouse", {
           delay: 1.4,
