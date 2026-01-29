@@ -199,7 +199,7 @@ document.fonts.ready.then(function () {
       start: "top 60%",
       end: "+=100%",
       scrub: 1,
-      markers: true,
+      // markers: true,
     },
     opacity: 0,
     yPercent: 80,
