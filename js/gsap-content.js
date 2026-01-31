@@ -32,7 +32,7 @@ document.fonts.ready.then(function () {
       opacity: 0,
       duration: .8,
       onComplete: () => {
-        gsap.set('div.preloader', {visibility:"hidden", display:"none"});
+        gsap.set('div.preloader', { visibility: "hidden", display: "none" });
         body.classList.remove('preloader');
 
         // init mouse position after loading screen
