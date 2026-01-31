@@ -773,7 +773,9 @@ document.fonts.ready.then(function () {
           if (inputEl.value == "210512" || inputEl.value === "120521") {
             codename = "THEBLACK";
 
-            document.querySelector('#vid1').play();
+            document.querySelector('#vid1').play().catch(err => {
+              console.warn('Autoplay blocked:', err);
+            });
 
           } else if (inputEl.value == "220705" || inputEl.value == "050722") {
             codename = "MERMAID";
@@ -785,8 +787,9 @@ document.fonts.ready.then(function () {
             document.querySelector('main').remove();
             ScrollTrigger.refresh();
 
-            document.querySelector('#vid2').play();
-            // videojs('vid2').play();
+            document.querySelector('#vid2').play().catch(err => {
+              console.warn('Autoplay blocked:', err);
+            });
           }
 
           newMsg.innerHTML = "codename: " + codename;
