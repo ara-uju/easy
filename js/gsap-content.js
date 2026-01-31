@@ -208,15 +208,15 @@ document.fonts.ready.then(function () {
 
   // pin gallery section
   let panelAnimation = gsap.timeline({
-      scrollTrigger: {
-        trigger: gallerySection,
-        pin: true,
-        pinSpacing: "margin",
-        start: "top top",
-        end: () => "+=" + galWidth,
-        scrub: 1
-      },
-    }
+    scrollTrigger: {
+      trigger: gallerySection,
+      pin: true,
+      pinSpacing: "margin",
+      start: "top top",
+      end: () => "+=" + galWidth,
+      scrub: 1
+    },
+  }
   )
     .to(galPanel, {
       xPercent: -100 * (galPanel.length - 1) - 100,
