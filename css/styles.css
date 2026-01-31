@@ -1144,7 +1144,18 @@ video {
 .MERMAID .vid-link.link2 {
 	pointer-events: all;
 	visibility: visible;
-	opacity: .15;
+	font-size: 1.75rem;
+	opacity: .25;
+}
+
+@media screen and (max-width: 767px) {
+	.THEBLACK .vid-link.link1,
+	.MERMAID .vid-link.link2 {
+		opacity: .75;
+		font-size: 1.5rem;
+		right: unset;
+		left: var(--mobile-padding);
+	}
 }
 
 .vid-link.link1 {
@@ -1320,6 +1331,18 @@ footer {
 	font-size: 1.25rem;
 }
 
+@media screen and (max-width: 991px) {
+	footer {
+		font-size: 1rem;
+	}
+}
+
+@media screen and (max-width: 767px) {
+	footer {
+		font-size: .875rem;
+	}
+}
+
 footer,
 footer * {
 	font-family: 'Roboto', sans-serif;
@@ -1438,6 +1461,8 @@ h1,
 	position: fixed;
 	top: var(--main-padding);
 	left: var(--main-padding);
+	width: 1.825rem;
+    height: 1.825rem;
 	mix-blend-mode: exclusion;
 	z-index: 50;
 }
@@ -1447,12 +1472,25 @@ h1,
 	background-color: var(--the-black);
 	padding: 2.5rem 1.5rem;
     left: 1.8rem;
-	font-size: 1rem;
+	font-size: .875rem;
 	pointer-events: none;
 	opacity: 0;
-	width: 18rem;
+	width: 22rem;
 	position: absolute;
 	transition: opacity .5s ease;
+}
+
+@media screen and (max-width: 767px) {
+	.about-container {
+		right: var(--mobile-padding);
+		left: unset;
+		mix-blend-mode: unset;
+	}
+
+	.about-content {
+	    left: unset;
+    	right: 0;
+	}
 }
 
 .about-container p {
@@ -1470,12 +1508,18 @@ h1,
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	z-index: 50;
 	transition: all 1s ease;
 }
 
 .THEBLACK .about-icon {
 	color: var(--the-white);
 	background-color: var(--the-black);
+}
+
+.MERMAID .about-icon {
+	color: var(--the-white);
+	background-color: var(--background-color);
 }
 
 .about-container:hover .about-content {
