@@ -975,6 +975,7 @@ footer .text-marquee .text {
 	z-index: 5;
 	cursor: pointer;
 	filter: blur(4px);
+	transition-delay: 150ms;
 	transition: filter 1s ease, opacity 1s ease, color 1.2s ease;
 }
 
@@ -1190,6 +1191,10 @@ video {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+.context-label {
+	display: none;
 }
 
 input {
