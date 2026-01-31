@@ -133,18 +133,20 @@ document.fonts.ready.then(function () {
       ease: "power2.out"
     }, "<");
 
+  const heroContainer = document.querySelector('.hero .container');
+
   document.querySelectorAll(".member-tag").forEach((member) => {
     let memberClassList = member.classList;
     let memberFocus = memberClassList[0].replace("member-tag", "") + memberClassList[1].replace("-tag", "");
 
     member.addEventListener("mouseover", () => {
-      if (document.querySelector(".hero .container")) {
-        document.querySelector(".hero .container").classList.add(memberFocus + "-focus");
+      if (heroContainer) {
+        heroContainer.classList.add(memberFocus + "-focus");
       }
     });
     member.addEventListener("mouseout", () => {
-      if (document.querySelector(".hero .container")) {
-        document.querySelector(".hero .container").classList.remove(memberFocus + "-focus");
+      if (heroContainer) {
+        heroContainer.classList.remove(memberFocus + "-focus");
       }
     });
 
@@ -400,13 +402,15 @@ document.fonts.ready.then(function () {
         }
       }, "<");
 
+  const ostContainer = document.querySelector('.soundtracks .container');
+
   // desktop hover interaction
   if (window.innerWidth > 991) {
     trackCs.forEach((tContainer) => {
 
       tContainer.addEventListener("mouseout", function () {
-        document.querySelector(".soundtracks .container").classList.remove("hover-right");
-        document.querySelector(".soundtracks .container").classList.remove("hover-left");
+        ostContainer.classList.remove("hover-right");
+        ostContainer.classList.remove("hover-left");
 
         let gtm = gsap.timeline({
           defaults: {
@@ -450,8 +454,8 @@ document.fonts.ready.then(function () {
 
         // left side
         if (tContainer.classList.contains("track-container-left")) {
-          document.querySelector(".soundtracks .container").classList.remove("hover-right");
-          document.querySelector(".soundtracks .container").classList.add("hover-left");
+          ostContainer.classList.remove("hover-right");
+          ostContainer.classList.add("hover-left");
 
           gtm.to(trackCLeft, {
             width: widthGrow,
@@ -473,8 +477,8 @@ document.fonts.ready.then(function () {
         }
         // right side
         else {
-          document.querySelector(".soundtracks .container").classList.remove("hover-left");
-          document.querySelector(".soundtracks .container").classList.add("hover-right");
+          ostContainer.classList.remove("hover-left");
+          ostContainer.classList.add("hover-right");
 
           gtm.to(trackCRight, {
             width: widthGrow,
