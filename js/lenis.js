@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', function () {
     history.scrollRestoration = "manual";
   }
 
-  window.scrollTo(0, { immediate: true, force: true });
-  lenis.scrollTo(0, { immediate: true, force: true });
+  setTimeout(() => {
+    window.scrollTo(0, { immediate: true, force: true });
+    lenis.scrollTo(0, { immediate: true, force: true });
+  }, 200);
 });

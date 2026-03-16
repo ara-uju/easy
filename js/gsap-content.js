@@ -76,7 +76,7 @@ document.fonts.ready.then(function () {
       duration: 1,
       ease: "power2.out"
     }, "<")
-    .from(".header-wrapper h1", {
+    .from(".header-wrapper .style-h1", {
       xPercent: -14,
       stagger: .1,
       duration: 1,
@@ -175,10 +175,10 @@ document.fonts.ready.then(function () {
       // markers: false
     }
   })
-    .to(".hero h1", {
+    .to(".hero .style-h1", {
       filter: "blur(20px)"
     })
-    .to(".hero h1", {
+    .to(".hero .style-h1", {
       opacity: 0,
     });
 
@@ -191,6 +191,7 @@ document.fonts.ready.then(function () {
   const galleryImg = document.querySelectorAll('.gallery img');
 
   let galWidth = (document.querySelector(".gallery .subsection").offsetWidth - window.innerWidth);
+  galWidth = (document.querySelector(".gallery .subsection").offsetWidth);
 
   // reveal
   gsap.from(gallerySectionContainer, {
@@ -225,9 +226,15 @@ document.fonts.ready.then(function () {
     });
 
   // img parallax effect
+  let xParallaxFrom = -5;
+  let xParallaxTo = 30;
+  if (window.innerWidth <= 767) {
+    xParallaxFrom = -30;
+    xParallaxTo = 0;
+  }
   galleryImg.forEach((img) => {
     gsap.fromTo(img, {
-      xPercent: -5,
+      xPercent: xParallaxFrom,
       yPercent: 2
     }, {
       scrollTrigger: {
@@ -237,7 +244,7 @@ document.fonts.ready.then(function () {
         end: "right left+=2",
         scrub: 1,
       },
-      xPercent: 30,
+      xPercent: xParallaxTo,
       yPercent: -2,
       ease: 'power2.out'
     });
@@ -276,32 +283,102 @@ document.fonts.ready.then(function () {
   const trackCRight = document.querySelector(".track-container-right");
   let headerRevealed = false;
 
+  let ostTmDuration = "+=350%";
   let soundtrackTm = gsap.timeline({
     scrollTrigger: {
       trigger: soundtracksSection,
-      start: "top top",
-      end: "+=350%",
+      start: "top 50%",
+      end: () => {
+        if (window.innerWidth <= 767) {
+          ostTmDuration = "+=150%";
+        }
+        return ostTmDuration;
+      },
       scrub: true,
       toggleActions: "play reverse play reverse",
+      onEnter: () => {
+        // gsap.fromTo(soundtracksSection, {
+        //   opacity: 0
+        // }, {
+        //   delay: .25,
+        //   opacity: 1,
+        //   duration: 1,
+        //   ease: 'power2.out'
+        // });
+        revealDivider();
+      },
+      onEnterBack: () => {
+        gsap.to('.divider', {
+          opacity: 1,
+          duration: .2,
+          ease: 'power2.out'
+        });
+      },
+      onLeave: () => {
+        // ostSectionHide();
+      },
+      onLeaveBack: () => {
+        // ostSectionHide();
+      }
     }
   });
+
+  function revealDivider() {
+    gsap.set('.divider', { opacity: 1 });
+    if (window.innerWidth <= 991) {
+      gsap.fromTo('.divider', {
+        width: '0%'
+      }, {
+        delay: .4,
+        width: '100%',
+        duration: 1,
+        ease: 'ease2.out'
+      });
+    } else {
+      gsap.fromTo('.divider', {
+        height: '0%'
+      }, {
+        delay: .4,
+        height: '100%',
+        duration: 1,
+        ease: 'ease2.out'
+      });
+    }
+  }
+
+  function ostSectionHide() {
+    gsap.to('.divider', {
+      opacity: 0,
+      duration: .5,
+      ease: 'ease2.out'
+    });
+    gsap.to(soundtracksSection, {
+      opacity: 0,
+      duration: .5,
+      ease: 'power2.out'
+    });
+  }
 
   // if mobile, animate line horizontally, else make it vertical
   if (window.innerWidth <= 991) {
     soundtrackTm.from(".soundtracks .content", {
       opacity: 0,
-      duration: .2
+      duration: .15
     })
-      .to(document.querySelector(".divider span"), {
-        width: "100vw"
+      .to(".divider span", {
+        delay: .5,
+        width: "100vw",
+        duration: 1,
       });
   } else {
     soundtrackTm.from(".soundtracks .content", {
       opacity: 0,
-      duration: .2
+      duration: .15
     })
       .to(".divider span", {
-        height: "100vh"
+        delay: .5,
+        height: "100vh",
+        duration: 1,
       });
   }
 
@@ -309,13 +386,15 @@ document.fonts.ready.then(function () {
     scrollTrigger: {
       trigger: soundtracksSection,
       start: "top top",
-      end: "+=350%",
+      end: () => {
+        return ostTmDuration;
+      },
       scrub: true,
       // markers: false,
       pin: true,
       toggleActions: "play reverse play reverse",
       onEnterBack: () => {
-        if (document.querySelector("body").classList.contains("THEBLACK")) {
+        if (body.classList.contains("THEBLACK")) {
           document.documentElement.style.setProperty('--background-color', 'var(--the-white)');
         }
 
@@ -326,7 +405,7 @@ document.fonts.ready.then(function () {
         });
       },
       onLeave: () => {
-        if (document.querySelector("body").classList.contains("THEBLACK")) {
+        if (body.classList.contains("THEBLACK")) {
           document.documentElement.style.setProperty('--background-color', 'var(--the-black)');
         }
 
@@ -339,18 +418,17 @@ document.fonts.ready.then(function () {
       }
     }
   })
-    // .from(soundtracksSection, {
-    //   opacity: 0,
-    //   height: "0vh",
-    //   duration: .8,
-    //   ease: "power1.out"
-    // }, "<")
-    .from(".soundtracks h3", {
+    .from(soundtracksSection, {
+      opacity: 0,
+      duration: .2,
+      ease: 'none'
+    })
+    .from(".soundtracks .section-title", {
       opacity: 0,
       xPercent: -15,
       duration: .8
-    })
-    .fromTo(trackCLeft.querySelector("h1"), {
+    }, "<")
+    .fromTo(trackCLeft.querySelector(".style-h1"), {
       opacity: 0,
       xPercent: 150
     },
@@ -360,7 +438,7 @@ document.fonts.ready.then(function () {
         duration: .4,
         ease: "power2.out"
       }, "<")
-    .fromTo(trackCRight.querySelector("h1"), {
+    .fromTo(trackCRight.querySelector(".style-h1"), {
       opacity: 0,
       xPercent: -150
     },
@@ -387,7 +465,7 @@ document.fonts.ready.then(function () {
           let textRight = document.querySelector(".t-two").innerHTML;
 
           // if body has no class and first time revealing
-          if (textLeft && textRight && !document.querySelector("body").classList.length && !headerRevealed) {
+          if (textLeft && textRight && !body.classList.length && !headerRevealed) {
             let scrambleTimeout = setTimeout(() => {
               scrambleText(document.querySelector(".t-two"), textRight);
               scrambleText(document.querySelector(".t-one"), textLeft);
@@ -430,7 +508,7 @@ document.fonts.ready.then(function () {
             duration: .2,
             ease: "power4.out"
           }, "<")
-          .to(".inner h1", {
+          .to(".inner .style-h1", {
             skewX: 0,
             duration: .2,
             ease: "power4.out"
@@ -469,7 +547,7 @@ document.fonts.ready.then(function () {
               duration: duration,
               ease: ease
             }, "<")
-            .to(".inner h1", {
+            .to(".inner .style-h1", {
               skewX: skew,
               duration: duration,
               ease: ease
@@ -492,7 +570,7 @@ document.fonts.ready.then(function () {
               duration: duration,
               ease: ease
             }, "<")
-            .to(".inner h1", {
+            .to(".inner .style-h1", {
               skewX: -skew,
               duration: duration,
               ease: ease
@@ -510,11 +588,11 @@ document.fonts.ready.then(function () {
       toggleActions: "play resume resume resume"
     }
   })
-    .to(document.querySelector("body"), {
+    .to(body, {
       onStart: () => {
-        if (document.querySelector("body").classList.contains("THEBLACK")) {
+        if (body.classList.contains("THEBLACK")) {
 
-          gsap.to("body", {
+          gsap.to(body, {
             backgroundColor: "var(--the-white)",
             duration: 1.4,
             ease: "power2.out"
@@ -669,7 +747,7 @@ document.fonts.ready.then(function () {
       opacity: 0,
     }, {
       opacity: 1,
-      delay: .4,
+      delay: .3,
       duration: 1,
       ease: "power1.out"
     }, "<")
@@ -804,6 +882,7 @@ document.fonts.ready.then(function () {
               ease: "power4.out",
               onComplete: () => {
                 document.querySelector("body").classList.add(codename);
+                ScrollTrigger.refresh();
               }
             })
             .to(newMsg, {
