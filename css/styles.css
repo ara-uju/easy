@@ -1699,6 +1699,10 @@ span.highlight {
 
 @media screen and (max-width:767px) {
 
+	section .container {
+		padding-top: 6rem;
+	}
+
 	.style-h1 {
 		font-size: clamp(1.4rem, 18vw, 4.7rem);
 	}
