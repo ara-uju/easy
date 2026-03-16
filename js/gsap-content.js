@@ -823,6 +823,13 @@ document.fonts.ready.then(function () {
     if ((inputEl.value == "210512" || inputEl.value === "120521" || inputEl.value == "220705" || inputEl.value == "050722") && !lastSequence) {
       lastSequence = true;
 
+      // Set codename immediately to prevent further input mirroring
+      if (inputEl.value == "210512" || inputEl.value === "120521") {
+        codename = "THEBLACK";
+      } else if (inputEl.value == "220705" || inputEl.value == "050722") {
+        codename = "MERMAID";
+      }
+
       clearTimeout(keyTimeout);
 
       inputMirror.classList.remove("blinking");
@@ -852,14 +859,11 @@ document.fonts.ready.then(function () {
           }
 
           if (inputEl.value == "210512" || inputEl.value === "120521") {
-            codename = "THEBLACK";
-
             document.querySelector('#vid1').play().catch(err => {
               console.warn('Autoplay blocked:', err);
             });
 
           } else if (inputEl.value == "220705" || inputEl.value == "050722") {
-            codename = "MERMAID";
             document.documentElement.style.setProperty('--background-color', '#46D9E9');
             document.documentElement.style.setProperty('--header-color', '#46D9E9');
             document.documentElement.style.setProperty('--subheader-color', '#46D9E9');
