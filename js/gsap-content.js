@@ -780,6 +780,11 @@ document.fonts.ready.then(function () {
   inputEl.addEventListener("input", function (e) {
     e.stopPropagation();
 
+    // Stop processing if correct answer already found
+    if (lastSequence) {
+      return;
+    }
+
     // solid input bar
     inputMirror.classList.add("solid");
     inputMirror.classList.remove("blinking");
