@@ -13,6 +13,8 @@ for (let i = 1; i < 11; i++) {
   }
 }
 
+let codename = "";
+
 document.fonts.ready.then(function () {
 
   const body = document.querySelector("body");
@@ -789,7 +791,10 @@ document.fonts.ready.then(function () {
       inputMirror.classList.remove("solid");
     }, 400);
 
-    inputMirror.innerHTML = inputEl.value;
+    // update mirror until a correct answer is activated
+    if(codename==="") {
+      inputMirror.innerHTML = inputEl.value;
+    }
 
     const regex = /[a-zA-Z]+/;
 
@@ -833,8 +838,6 @@ document.fonts.ready.then(function () {
           document.querySelector(".code-message-wrapper").remove();
           let newMsg = document.createElement("h2");
           newMsg.classList.add("msg");
-
-          let codename = "";
 
           if (inputEl.value == "210512" || inputEl.value === "120521" || inputEl.value == "220705" || inputEl.value == "050722") {
             let keyTimeout = setTimeout(() => {
